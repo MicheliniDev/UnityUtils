@@ -1,2 +1,14 @@
 # UnityUtils
-A collection of Unity utilities and patterns I use :)
+Contains: 
+- Event Bus System
+- State Machine
+- Object Pooling
+- Serializable Dictionary
+- Serializable Interface
+- Inspector Scene Field
+- Singleton Base Class
+- Type Dropdown for Serialize Reference
+- Scriptable Object Architecture Pattern:
+- - Scriptable Sheets
+- - Scriptable Variables
+- - Scriptable Singleton
