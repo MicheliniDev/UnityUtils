@@ -1,0 +1,11 @@
+{
+  "name": "michelinidev.utils",
+  "version": "1.0.0",
+  "displayName": "Michelini Utils",
+  "description": "A collection of common patterns and utilities for Unity Engine",
+  "author": {
+    "name": "MicheliniDev",
+    "email": "michelinidev@gmail.com",
+    "url": "https://github.com/MicheliniDev"
+  }
+}

@@ -1,0 +1,55 @@
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace MicheliniDev.Utils.FSM
+{
+    public class FsmBlackboard : MonoBehaviour
+    {
+        private Dictionary<Type, Component> components = new Dictionary<Type, Component>();
+
+        [SerializeReference] public List<FsmVariable> Variables = new List<FsmVariable>();
+        public List<string> Events;
+
+        public void Register<T>(T component) where T : Component
+        {
+            if (!components.ContainsKey(typeof(T)))
+            {
+                components[typeof(T)] = component;
+            }
+        }
+
+        public T Get<T>(bool findInChildren = true, bool findInactive = false) where T : Component
+        {
+            var type = typeof(T);
+            if (components.TryGetValue(type, out Component val))
+                return (T)val;
+
+            var comp = GetComponent<T>();
+            if (comp)
+            {
+                Register(comp);
+                return comp;
+            }
+            else if (findInChildren)
+            {
+                comp = GetComponentInChildren<T>(findInactive);
+                Register(comp);
+                return comp;
+            }
+            return null;
+        }
+
+        public T GetVariable<T>(string name) where T : FsmVariable
+        {
+            foreach (var variable in Variables)
+            {
+                if (variable.Name == name && variable is T typedVar)
+                {
+                    return typedVar;
+                }
+            }
+            return null;
+        }
+    }
+}
