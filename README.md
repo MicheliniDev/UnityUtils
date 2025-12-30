@@ -7,6 +7,7 @@ Contains:
 - Serializable Interface
 - Inspector Scene Field
 - Singleton Base Class
+- Service Locator
 - Type Dropdown for Serialize Reference
 - Scriptable Object Architecture Pattern:
 - - Scriptable Sheets

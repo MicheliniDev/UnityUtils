@@ -15,7 +15,7 @@ namespace MicheliniDev.Utils.Editor
             {
                 if (!property.isExpanded) return EditorGUIUtility.singleLineHeight;
 
-                float height = EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing; // Header
+                float height = EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing; 
 
                 for (int i = 0; i < property.arraySize; i++)
                 {
@@ -28,7 +28,7 @@ namespace MicheliniDev.Utils.Editor
                     height += elementHeight + EditorGUIUtility.standardVerticalSpacing + 6;
                 }
 
-                height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing * 2; // Add Button
+                height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing * 2; 
                 return height;
             }
 
