@@ -10,6 +10,6 @@ Contains:
 - Service Locator
 - Type Dropdown for Serialize Reference
 - Scriptable Object Architecture Pattern:
-- - Scriptable Sheets
-- - Scriptable Variables
-- - Scriptable Singleton
+  - Scriptable Sheets
+  - Scriptable Variables
+  - Scriptable Singleton

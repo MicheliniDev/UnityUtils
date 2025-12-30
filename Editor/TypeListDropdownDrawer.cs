@@ -13,7 +13,8 @@ namespace MicheliniDev.Utils.Editor
         {
             if (property.isArray)
             {
-                if (!property.isExpanded) return EditorGUIUtility.singleLineHeight;
+                if (!property.isExpanded) 
+                    return EditorGUIUtility.singleLineHeight;
 
                 float height = EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing; 
 
@@ -71,9 +72,11 @@ namespace MicheliniDev.Utils.Editor
 
                 for (int i = 0; i < property.arraySize; i++)
                 {
-                    SerializedProperty element = property.GetArrayElementAtIndex(i);
+                    var element = property.GetArrayElementAtIndex(i);
                     float elementHeight = EditorGUI.GetPropertyHeight(element, true);
-                    if (elementHeight < EditorGUIUtility.singleLineHeight) elementHeight = EditorGUIUtility.singleLineHeight;
+                    
+                    if (elementHeight < EditorGUIUtility.singleLineHeight) 
+                        elementHeight = EditorGUIUtility.singleLineHeight;
 
                     float boxHeight = elementHeight + 6;
                     currentRect.height = boxHeight;
@@ -124,13 +127,13 @@ namespace MicheliniDev.Utils.Editor
 
         private string GetTypeName(SerializedProperty element)
         {
-            if (element.managedReferenceValue == null) return "Null";
+            if (element.managedReferenceValue == null) 
+                return "Null";
 
             SerializedProperty nameProp = element.FindPropertyRelative("Name");
+            
             if (nameProp != null && !string.IsNullOrEmpty(nameProp.stringValue))
-            {
                 return nameProp.stringValue;
-            }
 
             var type = element.managedReferenceValue.GetType();
             return type.Name;
