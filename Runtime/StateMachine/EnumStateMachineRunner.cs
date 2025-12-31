@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 namespace MicheliniDev.Utils.FSM
@@ -11,11 +12,22 @@ namespace MicheliniDev.Utils.FSM
     {
         [SerializeField] private SerializableDictionary<T, FsmState> states;
 
-        public void ChangeState(T stateType) 
+        protected override void InitializeStates()
+        {
+            base.allStates = states.Values.ToList();
+            foreach (var state in states.Values)
+            {
+                state?.Initialize(this);
+            }
+        }
+        
+        public FsmState GetStateByEnum(T stateType) => states[stateType];
+
+        public void ChangeState(T stateType, StateChangeMode mode = StateChangeMode.Normal) 
         { 
             if (StateExists(stateType, out var state))
             {
-                ChangeState(state);
+                ChangeState(state, mode);
             }
         }
 

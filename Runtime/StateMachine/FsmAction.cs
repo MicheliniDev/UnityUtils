@@ -8,12 +8,13 @@ namespace MicheliniDev.Utils.FSM
         protected StateMachineRunner Owner { get; private set; }
         protected FsmBlackboard Blackboard { get; private set; }
 
-        public virtual void OnEnter(StateMachineRunner owner)
+        public virtual void Initialize(StateMachineRunner owner)
         {
             Owner = owner;
             Blackboard = owner.Blackboard;
         }
 
+        public virtual void OnEnter() { }
         public virtual void OnUpdate() { }
         public virtual void OnFixedUpdate() { }
         public virtual void OnExit() { }

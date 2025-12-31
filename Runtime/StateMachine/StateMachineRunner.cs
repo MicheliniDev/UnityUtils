@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace MicheliniDev.Utils.FSM
@@ -9,14 +11,31 @@ namespace MicheliniDev.Utils.FSM
 
         private FsmBlackboard blackboard;
         private FsmState currentState;
-        
+        private bool isLocked;
+
+        protected List<FsmState> allStates;
+
         public FsmBlackboard Blackboard => blackboard;
         public FsmState CurrentState => currentState;
 
         private void Awake()
         {
             blackboard = GetComponent<FsmBlackboard>();
+            InitializeStates();
+        }
+
+        private void Start()
+        {
             ChangeState(startState);
+        }
+
+        protected virtual void InitializeStates()
+        {
+            allStates = GetComponentsInChildren<FsmState>(true).ToList();
+            foreach (var state in allStates)
+            {
+                state.Initialize(this);
+            }
         }
 
         public void SendEvent(string eventId)
@@ -24,7 +43,7 @@ namespace MicheliniDev.Utils.FSM
             currentState?.OnEvent(eventId);
         }
 
-        public void ChangeState(FsmState newState)
+        public void ChangeState(FsmState newState, StateChangeMode mode = StateChangeMode.Normal)
         {
             if (newState == null)
             {
@@ -32,10 +51,26 @@ namespace MicheliniDev.Utils.FSM
                 return;
             }
 
+            if (isLocked && mode == StateChangeMode.Normal)
+            {
+                Debug.Log($"Ignored transition to {newState.name} because FSM is Locked");
+                return;
+            }
+
             currentState?.OnExit();
             currentState = newState;
-            currentState?.OnStateEnter(this);
+
+            isLocked = mode switch
+            {
+                StateChangeMode.Force => false,
+                StateChangeMode.ForceAndLock => true,
+                _ => isLocked
+            };
+
+            currentState?.OnStateEnter();
         }
+
+        public FsmState GetStateByName(string stateName) => allStates.FirstOrDefault(s => s.name == stateName);
 
         #region Callbacks
         private void Update()

@@ -10,11 +10,17 @@ namespace MicheliniDev.Utils.FSM
 
         private StateMachineRunner owner;
 
-        public void OnStateEnter(StateMachineRunner controller)
+        public void Initialize(StateMachineRunner controller)
         {
             owner = controller;
+            foreach (var action in actions)
+                action?.Initialize(controller);
+        }
+
+        public void OnStateEnter()
+        {
             foreach (var action in actions) 
-                action?.OnEnter(owner);
+                action?.OnEnter();
         }
 
         public void OnStateUpdate()
