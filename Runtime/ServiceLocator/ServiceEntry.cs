@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace MD.Utils.ServiceLocator
+namespace MicheliniDev.Utils.ServiceLocator
 {
     [Serializable]
     public class ServiceEntry

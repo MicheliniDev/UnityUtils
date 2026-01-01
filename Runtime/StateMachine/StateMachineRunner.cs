@@ -38,9 +38,9 @@ namespace MicheliniDev.Utils.FSM
             }
         }
 
-        public void SendEvent(string eventId)
+        public void SendEvent(FsmEvent fsmEvent)
         {
-            currentState?.OnEvent(eventId);
+            currentState?.OnEvent(fsmEvent);
         }
 
         public void ChangeState(FsmState newState, StateChangeMode mode = StateChangeMode.Normal)

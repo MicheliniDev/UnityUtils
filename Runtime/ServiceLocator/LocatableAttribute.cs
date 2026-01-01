@@ -1,6 +1,6 @@
 using System;
 
-namespace MD.Utils.ServiceLocator
+namespace MicheliniDev.Utils.ServiceLocator
 {
     [AttributeUsage(AttributeTargets.Interface, Inherited = false)]
     public class LocatableAttribute : Attribute

@@ -7,12 +7,10 @@ namespace MicheliniDev.Utils.FSM
     public class StateMachineRunnerEditor : UnityEditor.Editor
     {
         private SerializedProperty startStateProp;
-        private SerializedProperty currentStateProp;
 
         private void OnEnable()
         {
             startStateProp = serializedObject.FindProperty("startState");
-            currentStateProp = serializedObject.FindProperty("currentState");
         }
 
         public override void OnInspectorGUI()

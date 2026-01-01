@@ -7,12 +7,12 @@ namespace MicheliniDev.Utils.FSM
     public class FsmBlackboardEditor : UnityEditor.Editor
     {
         private SerializedProperty variablesProp;
-        private SerializedProperty eventIdsProp;
+        private SerializedProperty eventsProp;
 
         private void OnEnable()
         {
             variablesProp = serializedObject.FindProperty("Variables");
-            eventIdsProp = serializedObject.FindProperty("Events");
+            eventsProp = serializedObject.FindProperty("Events");
         }
 
         public override void OnInspectorGUI()
@@ -21,25 +21,27 @@ namespace MicheliniDev.Utils.FSM
             GUILayout.Space(4f);
 
             EditorGUILayout.LabelField("FSM Events", EditorStyles.boldLabel);
-            DrawStringList(eventIdsProp);
+            DrawEventDefinitionList(eventsProp);
 
             GUILayout.Space(10f);
             EditorGUILayout.LabelField("Blackboard Data", EditorStyles.boldLabel);
-            FsmEditorUtils.DrawSerializeReferenceList(variablesProp, typeof(FsmVariable));
+            FsmEditorUtils.DrawSerializeReferenceList(variablesProp, typeof(FsmVariableBase));
 
             serializedObject.ApplyModifiedProperties();
         }
 
-        private void DrawStringList(SerializedProperty listProperty)
+        private void DrawEventDefinitionList(SerializedProperty listProperty)
         {
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
 
             for (int i = 0; i < listProperty.arraySize; i++)
             {
                 SerializedProperty element = listProperty.GetArrayElementAtIndex(i);
+                SerializedProperty idProp = element.FindPropertyRelative("id");
+
                 EditorGUILayout.BeginHorizontal();
 
-                EditorGUILayout.PropertyField(element, GUIContent.none);
+                EditorGUILayout.PropertyField(idProp, GUIContent.none);
 
                 if (GUILayout.Button("X", GUILayout.Width(20)))
                 {
@@ -54,7 +56,8 @@ namespace MicheliniDev.Utils.FSM
             if (GUILayout.Button("Add Event"))
             {
                 listProperty.InsertArrayElementAtIndex(listProperty.arraySize);
-                listProperty.GetArrayElementAtIndex(listProperty.arraySize - 1).stringValue = string.Empty;
+                var newElem = listProperty.GetArrayElementAtIndex(listProperty.arraySize - 1);
+                newElem.FindPropertyRelative("id").stringValue = "New Event";
             }
 
             EditorGUILayout.EndVertical();

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MD.Utils.ServiceLocator
+namespace MicheliniDev.Utils.ServiceLocator
 {
     [DefaultExecutionOrder(-20)]
     public class SceneBootstrapper : MonoBehaviour

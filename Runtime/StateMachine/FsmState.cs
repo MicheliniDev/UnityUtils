@@ -17,6 +17,24 @@ namespace MicheliniDev.Utils.FSM
                 action?.Initialize(controller);
         }
 
+        public void OnEvent(FsmEvent fsmEvent)
+        {
+            foreach (var transition in transitions)
+            {
+                if (!transition.Event)
+                {
+                    Debug.Log("Transition is null");
+                    continue;
+                }
+                
+                if (transition.Event == fsmEvent)
+                {
+                    owner.ChangeState(transition.TargetState);
+                    return;
+                }
+            }
+        }
+
         public void OnStateEnter()
         {
             foreach (var action in actions) 
@@ -39,18 +57,6 @@ namespace MicheliniDev.Utils.FSM
         {
             foreach (var action in actions)
                 action?.OnExit();
-        }
-
-        public void OnEvent(string eventId)
-        {
-            foreach (var transition in transitions)
-            {
-                if (transition.EventId == eventId)
-                {
-                    owner.ChangeState(transition.TargetState);
-                    return;
-                }
-            }
         }
 
         public void OnStateCollisionEnter(Collision collision)

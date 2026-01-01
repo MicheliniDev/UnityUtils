@@ -6,11 +6,11 @@ namespace MicheliniDev.Utils.FSM
 {
     public class FsmBlackboard : MonoBehaviour
     {
-        private Dictionary<string, FsmVariable> variableLookup = new Dictionary<string, FsmVariable>();
+        private Dictionary<string, FsmVariableBase> variableLookup = new Dictionary<string, FsmVariableBase>();
         private Dictionary<Type, Component> components = new Dictionary<Type, Component>();
 
-        [SerializeReference] public List<FsmVariable> Variables = new List<FsmVariable>();
-        public List<string> Events;
+        [SerializeReference] public List<FsmVariableBase> Variables = new List<FsmVariableBase>();
+        public List<FsmEvent> Events;
 
         private void Awake()
         {
@@ -49,12 +49,12 @@ namespace MicheliniDev.Utils.FSM
             return null;
         }
 
-        public T GetVariable<T>(string name) where T : FsmVariable
+        public T GetVariable<T>(string name) where T : FsmVariableBase
         {
-            var variable = variableLookup[name];
-            if (variable is T varr)
-                return varr;
-
+            if (variableLookup.TryGetValue(name, out var variable))
+            {
+                return variable as T;
+            }
             return null;
         }
     }

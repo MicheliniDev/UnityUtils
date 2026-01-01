@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-namespace MD.Utils.ServiceLocator
+namespace MicheliniDev.Utils.ServiceLocator
 {
     public class ServiceInfo
     {

@@ -24,7 +24,6 @@ namespace MicheliniDev.Utils.Editor
             Type concreteType = GetTypeFromProperty(property);
             Type interfaceType = typeof(UnityEngine.Object);
 
-
             if (concreteType != null && concreteType.IsGenericType)
             {
                 interfaceType = concreteType.GetGenericArguments()[0];

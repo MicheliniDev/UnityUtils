@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ namespace MicheliniDev.Utils.FSM
 {
     public static class ReferenceDrawerUtils
     {
-        public static void DrawReference(Rect position, SerializedProperty property, System.Type variableType)
+        public static void DrawReference(Rect position, SerializedProperty property, Type variableType)
         {
             SerializedProperty useBlackboard = property.FindPropertyRelative("useBlackboard");
             SerializedProperty constantValue = property.FindPropertyRelative("constantValue");
@@ -18,11 +19,11 @@ namespace MicheliniDev.Utils.FSM
             Rect modeRect = new Rect(position.x, position.y, position.width, singleLineHeight);
             Rect contentRect = new Rect(position.x, position.y + singleLineHeight + spacing, position.width, singleLineHeight);
 
-            modeRect.x -= 14f;
-            modeRect.width += 14f;
+            modeRect.x -= 30f;
+            modeRect.width += 30f;
 
-            contentRect.x -= 13.5f;
-            contentRect.width += 13.5f;
+            contentRect.x -= 30f;
+            contentRect.width += 30f;
 
             int currentMode = useBlackboard.boolValue ? 1 : 0;
             string[] modes = { "Regular", "Blackboard Variable" };
@@ -36,7 +37,7 @@ namespace MicheliniDev.Utils.FSM
                 DrawBlackboardSelector(contentRect, variableName, variableType, property);
         }
 
-        private static void DrawBlackboardSelector(Rect rect, SerializedProperty nameProp, System.Type varType, SerializedProperty rootProp)
+        public static void DrawBlackboardSelector(Rect rect, SerializedProperty nameProp, Type varType, SerializedProperty rootProp)
         {
             FsmBlackboard blackboard = null;
 
@@ -60,7 +61,7 @@ namespace MicheliniDev.Utils.FSM
 
             if (validVariables.Count == 0)
             {
-                EditorGUI.LabelField(rect, "<No Variables of type>", EditorStyles.miniLabel);
+                EditorGUI.LabelField(rect, $"No Variables of type {varType.Name}", EditorStyles.miniLabel);
                 return;
             }
 
